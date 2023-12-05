@@ -169,6 +169,7 @@ import ModalCreateChallenge from "./ModalCreateChallenge.vue";
 import ModalTournamentInfo from './ModalTournamentInfo.vue';
 import ChallengeEnter from './ChallengeEnter.vue';
 const router = useRouter();
+
 //props 
 
 // DATA
@@ -646,6 +647,38 @@ const challengeInProgress = {
         rate: true,
     })),
 };
+const tournamentCode = [
+    { id: 1, code: '#46812' },
+    { id: 2, code: '#72594' },
+    { id: 3, code: '#83647' },
+    { id: 4, code: '#15983' },
+    { id: 5, code: '#24680' },
+    { id: 6, code: '#57231' },
+    { id: 7, code: '#90314' },
+    { id: 8, code: '#46809' },
+    { id: 9, code: '#78534' },
+    { id: 10, code: '#62489' },
+    { id: 11, code: '#10257' },
+    { id: 12, code: '#89346' },
+    { id: 13, code: '#43678' },
+    { id: 14, code: '#71928' },
+    { id: 15, code: '#36501' },
+    { id: 16, code: '#98453' },
+    { id: 17, code: '#65237' },
+    { id: 18, code: '#84715' },
+    { id: 19, code: '#53169' },
+    { id: 20, code: '#20874' },
+    { id: 21, code: '#96428' },
+    { id: 22, code: '#38156' },
+    { id: 23, code: '#57429' },
+    { id: 24, code: '#68320' },
+    { id: 25, code: '#42695' },
+    { id: 26, code: '#81903' },
+    { id: 27, code: '#27584' },
+    { id: 28, code: '#69037' },
+    { id: 29, code: '#14389' },
+    { id: 30, code: '#50762' },
+];
 // Dữ liệu mẫu cho top ranking
 const topRankingUsers = Array.from({ length: 20 }, (_, index) => ({
     order: index + 1,
@@ -658,8 +691,8 @@ const topRankingUsers = Array.from({ length: 20 }, (_, index) => ({
 //REFS
 let activeTabKey = ref(1);
 const tournamentPageSize = ref(6);
-const soloPageSize = ref(6
-);
+const soloPageSize = ref(6);
+
 let viewMore = ref(false);
 
 //formstate
@@ -691,7 +724,7 @@ const tournamentFormState = reactive({
     level: 'easy',
     challengeAttendCount: '',
     challengeTime: 'time1',
-    apiUpload: '/api/upload',
+    apiUpload: '',
     bannerFile: [],
 });
 const soloFormState = reactive({
@@ -721,6 +754,7 @@ const currentPageState = reactive({
 const modalTournamentInfoState = reactive({
     type: 'primay',
     visible: false,
+
 })
 // MOUNTED
 onMounted(() => {
@@ -778,7 +812,7 @@ const displaySoloItem = computed(() => {
 const selectTopRankingUsers = computed(() => {
     return viewMore.value ? topRankingUsers : topRankingUsers.slice(0, 10);
 });
-const currentTournamentInfo = ref({ name: '', id: '' });
+const currentTournamentInfo = ref({ name: '', id: '', matchingCode: '', tournamentUrl: '' });
 //METHODS
 
 const joinChallengeById = () => {
@@ -841,9 +875,12 @@ const handleEndedChange = (page: any) => {
 const handleSoloPageChange = (page: any) => {
     currentPageState.solo.current = page;
 };
+const currentUrl = window.location.href;
 const showInfo = (clickedItem: any) => {
     if (activeTabKey.value == 1) {
         currentTournamentInfo.value = { ...clickedItem };
+        currentTournamentInfo.value.matchingCode = tournamentCode.find(code => code.id === clickedItem.id)?.code ?? '';
+        currentTournamentInfo.value.tournamentUrl = `${currentUrl}/giaidau/${clickedItem.id}`;
         showTournamentModal();
     }
     else return;
@@ -856,7 +893,7 @@ const showTournamentModal = () => {
 }
 const handleTournamentModalCancel = () => {
     modalTournamentInfoState.visible = false;
-    currentTournamentInfo.value = { name: '', id: '' };
+    currentTournamentInfo.value = { name: '', id: '' , matchingCode: '', tournamentUrl: ''};
 }
 const toggleViewMore = () => {
     viewMore.value = !viewMore.value;
@@ -1102,8 +1139,8 @@ const getRankingStyle = (order: any) => {
     }
 
     .challenge-inprogress-img {
-        height: calc((100vw - 78px) * 9 /16);
         width: 100%;
+        aspect-ratio: 16/9;
     }
 
     .challenge-inprogress-card {
@@ -1140,8 +1177,8 @@ const getRankingStyle = (order: any) => {
     }
 
     .challenge-inprogress-img {
-        height: calc((100vw - 78px) * 9 /16);
         width: 100%;
+        aspect-ratio: 16/9;
     }
 
     .challenge-inprogress-card {
@@ -1169,43 +1206,44 @@ const getRankingStyle = (order: any) => {
 /* Medium screens (md) */
 @media (min-width: 768px) and (max-width: 991px) {
     .challenge-inprogress-img {
-        height: 9rem;
-        width: 16rem;
+        width: 25vw;
+        aspect-ratio: 16/9;
     }
     .ant-tabs-tabpane {
-        min-height: 67rem;
+        min-height: calc(90vw + 11rem);   
     }
 }
 
 /* Large screens (lg) */
 @media (min-width: 992px) and (max-width: 1199px) {
     .challenge-inprogress-img {
-        height: 9rem;
-        width: 16rem;
+        width: 20vw;
+        aspect-ratio: 16/9;
     }
     .ant-tabs-tabpane {
-        min-height: 67rem;
+        min-height: calc(74vw + 9rem);   
     }
 }
 
 /* Extra-large screens (xl) */
 @media (min-width: 1200px) and (max-width: 1599px) {
     .challenge-inprogress-img {
-        height: 9rem;
-        width: 16rem;
+        width: 15vw;
+        aspect-ratio: 16/9;
     }
     .ant-tabs-tabpane {
-        min-height: 67rem;
+        min-height: calc(58vw + 7rem);   
     }
 }
 
 /* Extra-extra-large screens (xxl) */
 @media (min-width: 1600px) {
     .challenge-inprogress-img {
-        height: 8.15624rem;
-        width: 14.5rem;
+        width: 12vw;
+        aspect-ratio: 16/9;
     }
     .ant-tabs-tabpane {
-        min-height: 33.5rem;   
+        min-height: calc(27vw + 2.5rem);   
     }
-}</style>
+}
+</style>

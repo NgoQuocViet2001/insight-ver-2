@@ -1,15 +1,13 @@
 <template>
     <div class="news">
-      <a-row :gutter="25" class="news-container">
-        <a-col :xxl="16" :xl="16" :lg="16" :md="16" :sm="24" :xs="24" class="news-content">
-          <Suspense>
+      <a-row  class="news-container">
+        <a-col :xxl="16" :xl="16" :lg="16" :md="16" :sm="24" :xs="24" class="news-col news-content">
             <CreatePost :current-user="currentUser" :subjects="subjects"/>
-          </Suspense>
           <Suspense>
               <AllPosts/>
           </Suspense>
         </a-col>
-        <a-col :xxl="8" :xl="8" :lg="8" :md="8" :sm="0" :xs="0" class="news-right-aside">
+        <a-col :xxl="8" :xl="8" :lg="8" :md="8" :sm="0" :xs="0" class="news-col news-right-aside">
           <div class="sticky-right-aside">
             <Suspense>
               <RightAside />
@@ -85,26 +83,76 @@ const subjects = [
   border-radius: 10px;
 }
 .news {
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   background-color: #c3d8e9;
 }
 .news .news-container {
-  padding: 0 1rem;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 .sticky-right-aside {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
 }
-/* Extra-extra-large screens (xxl) */
-@media only screen and  (min-width: 1600px) {
-  .news .news-content {
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
+:global(.ant-card.dXRjFB) {
+  margin-bottom: 1rem !important;
+}
+@media (max-width: 576px) {
+    
+}
+
+/* Small screens (sm) */
+@media (min-width: 576px) and (max-width: 767px) {
+    
+}
+
+/* Medium screens (md) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .news-content {
+    padding-left: 0.6rem !important; 
+    padding-right: 0.3rem !important;
   }
   .news-right-aside {
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
-  } 
+    padding-left: 0.3rem !important; 
+    padding-right: 0.6rem !important;
+  }
+}
+
+/* Large screens (lg) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .news-content {
+    padding-left: 0.6rem !important; 
+    padding-right: 0.3rem !important;
+  }
+  .news-right-aside {
+    padding-left: 0.3rem !important; 
+    padding-right: 0.6rem !important;
+  }
+}
+
+/* Extra-large screens (xl) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .news-content {
+    padding-left: 2rem !important; 
+    padding-right: 1rem !important;
+  }
+  .news-right-aside {
+    padding-left: 1rem !important; 
+    padding-right: 2rem !important;
+  }
+}
+
+/* Extra-extra-large screens (xxl) */
+@media (min-width: 1600px) {
+  .news-content {
+    padding-left: 6.25rem !important; 
+    padding-right: 3.125rem !important;
+  }
+  .news-right-aside {
+    padding-left: 3.125rem !important; 
+    padding-right: 6.25rem !important;
+  }
 }
 </style>

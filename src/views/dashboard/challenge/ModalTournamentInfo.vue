@@ -6,19 +6,37 @@
                 <div class="tournament-banner">
                     <img :src="modalInfoState.banner" alt="Ảnh post">
                 </div>
-                <div class="tournament-info">
-                    <h3 class="tournament-title">
-                        {{ modalInfoState.title }}
-                    </h3>
-                    <div class="tournament-attended">
-                        <span style="margin-right: 16px;">
-                            Số người: {{ modalInfoState.attendeesNumber }}/{{ modalInfoState.attendeesLimit }}
-                        </span>
-                        <!-- <sdButton v-if="modalInfoState.rate" type="primary" shape="round" size="sm">Rate</sdButton> -->
-                    </div>
-                    <div>
-
-                    </div>
+                <div class="tournament-info" style="flex-grow: 1;">
+                    <a-row class="tournament-info-row" style="justify-content: space-between; align-items: center;">
+                        <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                            <h3 class="tournament-title">
+                                {{ modalInfoState.title }}
+                            </h3>
+                        </a-col>
+                        <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                            <div>
+                                Mã giải đấu: {{ modalInfoState.matchingCode }}
+                            </div>
+                        </a-col>
+                    </a-row>
+                    <a-row class="tournament-info-row" style="justify-content: space-between; align-items: center;">
+                        <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                            <div class="tournament-attended">
+                                Số người: {{ modalInfoState.attendeesNumber }}/{{ modalInfoState.attendeesLimit }}
+                            </div>
+                        </a-col>
+                        <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                            <div style="display: flex;align-items: center; gap: 10px;">
+                                <div>
+                                    Mời bạn bè tham gia:
+                                </div>
+                                <a-typography-paragraph :copyable="{ text: modalInfoState.tournamentUrl }"
+                                    style="margin-top: 1rem; padding:4px 8px;border-radius: 20px;border: 2px solid #959595;color: #959595; display: flex;">
+                                    Link
+                                </a-typography-paragraph>
+                            </div>
+                        </a-col>
+                    </a-row>
                 </div>
             </div>
             <div class="tournament-user">
@@ -58,9 +76,11 @@
                 </div>
             </div>
             <div class="tournament-desc-action">
-                <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg" @click="handleViewDetail">Xem chi tiết
+                <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg"
+                    @click="handleViewDetail">Xem chi tiết
                 </sdButton>
-                <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg">Đăng ký tham gia</sdButton>
+                <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg">Đăng ký
+                    tham gia</sdButton>
             </div>
         </sdModal>
     </div>
@@ -74,7 +94,8 @@ const props = defineProps([
     'type',
     'tourInfo',
     'modalInfoState',
-    'handleViewDetail'
+    'handleViewDetail',
+    'matchingCode'
 ]);
 
 </script>

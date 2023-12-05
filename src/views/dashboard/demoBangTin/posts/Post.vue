@@ -114,8 +114,6 @@ const toggleComment = () => {
     border-bottom: 1px solid #f1f2f6;
     display: flex;
     justify-content: space-between;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .post-actions {

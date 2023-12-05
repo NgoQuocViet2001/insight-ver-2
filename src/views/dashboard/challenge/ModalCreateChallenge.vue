@@ -9,12 +9,18 @@
                             <a-input v-model:value="formState.challengeName" />
                         </a-form-item>
                         <a-form-item v-if="currentModal?.banner" name="challengeBanner" :label="currentModal?.banner">
-                            <a-upload :action="formState.apiUpload" name="challengeUpload"
-                                v-model:file-list="formState.bannerFile" :max-count="1">
+                            <a-upload :action="formState.apiUpload" name="challengeUpload" @change="handleFileChange"
+                                @remove="handleRemovePreview" v-model:file-list="formState.bannerFile" :max-count="1">
                                 <a-button>
                                     <unicon name="upload"></unicon>
                                 </a-button>
                             </a-upload>
+                            <div v-show="imageUrl">
+                                <h3>
+                                    Banner giải đấu
+                                </h3>
+                                <img style="object-fit: cover; width: 100%; aspect-ratio: 16/9;" :src="imageUrl" alt="Banner">
+                            </div>
                         </a-form-item>
                         <a-form-item v-if="currentModal?.description" name="challengeBanner"
                             :label="currentModal?.description">
@@ -72,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { BasicFormWrapper } from '@/views/styled';
 const dateFormat = 'MM/DD/YYYY';
 const props = defineProps([
@@ -83,6 +89,7 @@ const props = defineProps([
     'type',
     'formState',
 ]);
+const imageUrl = ref('');
 const currentModal = computed(() => modalText.find(item => item.id === props.modalID));
 
 const modalText = [
@@ -90,7 +97,7 @@ const modalText = [
         id: 1,
         label: 'Tạo giải đấu',
         name: 'Tên giải đấu',
-        banner: 'Banner giải đấu',
+        banner: 'Tải lên banner',
         description: 'Mô tả ngắn',
         uploadBanner: 'Upload',
         attendCount: 'Giới hạn người tham gia',
@@ -114,11 +121,21 @@ const modalText = [
         level: 'Độ khó',
     },
 ]
-
+const files = ref<string[]>([]);
+const handleFileChange = ({ file }: any) => {
+    const previewFile = file.originFileObj;
+    imageUrl.value = URL.createObjectURL(previewFile);
+    files.value.push(imageUrl.value);
+    console.log(files.value);
+};
+const handleRemovePreview = (event: any) => {
+    imageUrl.value = '';
+    files.value.slice(0, 1);
+    console.log(files.value);
+}
 </script>
 
 <style scoped>
-/* css modal */
 :global(div.ant-modal-wrap) {
     display: flex;
     align-items: center;

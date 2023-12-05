@@ -113,8 +113,9 @@ const toggleShow = () => {
 .study-info-title {
     border-radius: 10px;
     padding: 0.5rem 0.8rem;
-    width: 17.5rem;
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 4px;
     margin-bottom: 0.2rem;
