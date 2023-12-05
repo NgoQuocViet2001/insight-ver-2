@@ -59,7 +59,7 @@ const props = defineProps([
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center bottom;
-  padding: 2rem 4rem;
+  padding: 2rem;
   min-height: 16rem;
   border-radius: 10px;
 }

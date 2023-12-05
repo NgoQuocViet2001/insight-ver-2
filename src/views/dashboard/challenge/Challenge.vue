@@ -116,7 +116,7 @@
                             </TabBasic>
                             <ModalTournamentInfo :visible="modalTournamentInfoState.visible"
                                 :modalInfoState="currentTournamentInfo" :type="modalTournamentInfoState.type"
-                                :on-cancel="handleTournamentModalCancel" :handle-view-list="handleViewList" />
+                                :on-cancel="handleTournamentModalCancel" :handleViewDetail="handleViewDetail" />
                         </div>
                     </a-col>
                     <a-col :xxl="6" :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -183,7 +183,7 @@ const challengeItems = [
     },
     {
         id: 2,
-        title: "So tài",
+        title: "Solo",
         desc: "So tài code với bạn bè và người khác",
         backgroundImage: "https://assets.leetcode.com/contest/weekly-contest-290/card_img_1654267980.png",
         btnText: "Tạo"
@@ -204,7 +204,7 @@ const tabs = [
     },
     {
         id: 2,
-        label: "So tài",
+        label: "Solo",
     },
 ];
 
@@ -634,7 +634,7 @@ const challengeInProgress = {
     ],
     solo: Array.from({ length: 70 }, (_, index) => ({
         id: index + 1,
-        title: `So tài ${index + 1}`,
+        title: `Trận solo ${index + 1}`,
         banner: "https://assets.leetcode.com/contest/weekly-contest-290/card_img_1654267980.png",
         startTime: "2023-11-09 10:00 AM",
         status: "10 phút",
@@ -848,9 +848,8 @@ const showInfo = (clickedItem: any) => {
     }
     else return;
 }
-const handleViewList = () => {
-    if (!currentTournamentInfo.value.name) return;
-    router.push('/thuthach/giaidau');
+const handleViewDetail = () => {
+    router.push({ name: 'tournament-detail', params: { id: currentTournamentInfo.value.id } })
 }
 const showTournamentModal = () => {
     modalTournamentInfoState.visible = true;

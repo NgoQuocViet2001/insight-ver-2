@@ -14,7 +14,10 @@
                         <span style="margin-right: 16px;">
                             Số người: {{ modalInfoState.attendeesNumber }}/{{ modalInfoState.attendeesLimit }}
                         </span>
-                        <sdButton v-if="modalInfoState.rate" type="primary" shape="round" size="sm">Rate</sdButton>
+                        <!-- <sdButton v-if="modalInfoState.rate" type="primary" shape="round" size="sm">Rate</sdButton> -->
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </div>
@@ -55,7 +58,7 @@
                 </div>
             </div>
             <div class="tournament-desc-action">
-                <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg" @click="handleViewList">Xem danh sách
+                <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg" @click="handleViewDetail">Xem chi tiết
                 </sdButton>
                 <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg">Đăng ký tham gia</sdButton>
             </div>
@@ -71,7 +74,7 @@ const props = defineProps([
     'type',
     'tourInfo',
     'modalInfoState',
-    'handleViewList'
+    'handleViewDetail'
 ]);
 
 </script>
@@ -176,4 +179,5 @@ const props = defineProps([
     display: flex;
     justify-content: end;
     gap: 0.55rem;
-}</style>
+}
+</style>

@@ -139,8 +139,13 @@ export default [
     component: () => import("@/views/dashboard/challenge/Challenge.vue"),
   },
   {
-    path: '/thuthach/giaidau',
-    name: 'thuthach-giaidau',
-    component: () => import("@/views/dashboard/challenge/TournamentAttendeeList.vue"),
+    path: '/thuthach/giaidau/:id',
+    name: 'tournament-detail',
+    component: () => import( '@/views/dashboard/challenge/TournamentDetail.vue'),
   },
+  // {
+  //   path: '/thuthach/giaidau',
+  //   name: 'thuthach-giaidau',
+  //   component: () => import("@/views/dashboard/challenge/TournamentAttendeeList.vue"),
+  // },
 ];
