@@ -25,7 +25,7 @@
                     <div class="tournament-info">
                         <a-row class="tournament-info-row">
                             <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
-                                <h3 class="tournament-title">
+                                <h3 class="tournament-title" style="margin-bottom: 0;">
                                     {{ tournament?.title }}
                                 </h3>
                             </a-col>
@@ -41,7 +41,7 @@
                                     Số người: {{ tournament?.attendeesNumber }}/{{ tournament?.attendeesLimit }}
                                 </div>
                             </a-col>
-                            <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                            <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="24" :xs="24" class="tournament-invite">
                                 <div style="display: flex;align-items: center; gap: 10px;">
                                     <div>
                                         Mời bạn bè tham gia:
@@ -72,7 +72,7 @@
                             Ngày kết thúc: 26/12/2023
                         </a-col>
                     </a-row>
-                    <div style="margin-top: 1rem; display: flex; justify-content: space-between;" >
+                    <div style="margin-top: 1rem; display: flex; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="font-weight: 450;">Hàng chờ</div>
                             <div>
@@ -104,15 +104,22 @@
                             </div>
                         </template>
                         <template v-if="column.key === 'operator'">
-                            <div class="tournament-list-operator">
+                            <div v-if="isAccepted[record.userId]" class="tournament-list-operator">
                                 <div>
-                                    <sdButton type="primary" shape="round">
+                                    <sdButton type="primary" shape="round" @click="handleAccept(record.userId)">
                                         Đồng ý
                                     </sdButton>
                                 </div>
                                 <div>
-                                    <sdButton type="danger" shape="round">
+                                    <sdButton type="danger" shape="round" @click="handleReject(record.userId)">
                                         Từ chối
+                                    </sdButton>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div>
+                                    <sdButton type="success" shape="round" disabled>
+                                        Đã chấp thuận
                                     </sdButton>
                                 </div>
                             </div>
@@ -124,12 +131,13 @@
     </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Main } from '@/views/styled';
 import Mock from 'mockjs';
 import { BreadcrumbWrapperStyle } from "@/views/uiElements/ui-elements-styled";
 const router = useRoute();
+// const acceptStatus = reactive
 onMounted(() => {
 })
 const waitingSortState = ref('latest');
@@ -175,39 +183,20 @@ const columns = [
 
 
 ];
-const generateFakeData = (count: number) => {
-    const dataSource = [];
+interface FakeData {
+    id: number;
+    data: {
+        userId: string;
+        order: number;
+        fullName: string;
+        eloCoding: number;
+        appellation: string;
+        contestEntered: number;
+        email: string;
+        avatarUrl: string;
+    }[];
+}
 
-    for (let i = 1; i <= count; i++) {
-        const fakeData = Mock.mock({
-            id: i,
-            order: i,
-            fullName: Mock.mock('@name'),
-            eloCoding: '@integer(10000, 99999)',
-            appellation: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
-            contestEntered: '@integer(100, 1000)',
-            email: Mock.mock('@email'),
-            avatarUrl: 'https://th.bing.com/th/id/OIG.gq_uOPPdJc81e_v0XAei',
-        });
-
-        dataSource.push(fakeData);
-    }
-
-    return dataSource;
-};
-const data = generateFakeData(500);
-const pagination = ref({
-    total: data.length,
-    current: 1,
-    pageSize: 5,
-    showSizeChanger: false,
-    hideOnSinglePage: true,
-    showLessItems: true,
-    position: ['bottomCenter'],
-    onChange: (page: any) => {
-        pagination.value.current = page;
-    }
-});
 const tournamentData = [
     {
         id: 1,
@@ -665,6 +654,63 @@ const tournamentCode = [
 const tournament = tournamentData.find(tour => tour.id === +router.params.id);
 const matchingCode = tournamentCode.find(code => code.id === tournament?.id)?.code;
 const currentURL = window.location.href;
+const tournamentAttendeesLength = tournament?.attendeesNumber;
+const generateFakeData = (): FakeData[] => {
+    const dataSource: FakeData[] = [];
+
+    for (let i = 1; i <= 30; i++) {
+        const fakeData: FakeData = {
+            id: i,
+            data: Array.from({ length: tournamentAttendeesLength ?? 0 }, (_, j) => {
+                return {
+                    userId: Mock.mock('@id'),
+                    order: j,
+                    fullName: Mock.mock('@name'),
+                    eloCoding: Mock.mock('@integer(10000, 99999)'),
+                    appellation: Mock.mock('@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])'),
+                    contestEntered: Mock.mock('@integer(100, 1000)'),
+                    email: Mock.mock('@email'),
+                    avatarUrl: `https://picsum.photos/id/${Math.floor(Math.random() * 1000) + 1}/200/200`,
+                };
+            }),
+        };
+
+        dataSource.push(fakeData);
+    }
+
+    return dataSource;
+};
+
+const dataInit = generateFakeData();
+let data = ref(dataInit.find(data => data.id == +router.params.id)?.data);
+const pagination = reactive({
+    total: data.value?.length,
+    current: 1,
+    pageSize: 5,
+    showSizeChanger: false,
+    hideOnSinglePage: true,
+    showLessItems: true,
+    position: ['bottomCenter'],
+    onChange: (page: any) => {
+        pagination.current = page;
+    }
+});
+interface AcceptedStatus {
+    [key: string]: boolean;
+}
+
+const isAccepted = ref<AcceptedStatus>({});
+data.value?.forEach(dataItem => {
+    isAccepted.value[dataItem.userId] = true;
+})
+const handleAccept = (id: string) => {
+    isAccepted.value[id] = false;
+}
+const handleReject = (id: string) => {
+    data.value = data.value?.filter(item => item.userId !== id);
+    pagination.total = data.value?.length;
+}
+
 </script>
 <style scoped>
 /* css pagination */
@@ -708,10 +754,12 @@ const currentURL = window.location.href;
     background: #dfdfdf;
     border-radius: 6px;
 }
+
 :global(.tournament-detail-container .ant-btn.ant-btn-primary.ant-btn-round) {
     background-color: #0C4E99;
     border-color: #0C4E99;
 }
+
 :global(.tournament-detail-container thead>tr>th.ant-table-cell) {
     background-color: #EB763C;
     color: #fff;
@@ -725,8 +773,18 @@ const currentURL = window.location.href;
     border-top-right-radius: 8px !important;
 }
 
-:global(.ant-table-thead th.ant-table-column-has-sorters:hover) {
+:global(.tournament-detail-container .ant-table-thead th.ant-table-column-has-sorters:hover) {
     background: #dd875c !important;
+}
+
+:global(.tournament-detail-container .ant-spin-container) {
+    display: flex;
+    flex-direction: column;
+    min-height: 42.5rem;
+}
+
+:global(.tournament-detail-container .ant-table) {
+    flex-grow: 1;
 }
 
 .tournament-detail-container {
@@ -752,8 +810,8 @@ const currentURL = window.location.href;
 }
 
 .tournament-banner img {
-    height: 9rem;
     width: 16rem;
+    aspect-ratio: 16/9;
     border-radius: 16px;
 }
 
@@ -859,5 +917,52 @@ const currentURL = window.location.href;
     gap: 6px;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 576px) {
+    .tournament-detail-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .tournament-content {
+        flex-direction: column;
+    }
+    .tournament-content > div.tournament-banner > img {
+        width: 100%;
+    }
+    .tournament-info {
+        margin-left: 0;
+    }
+    .tournament-info-row {
+        text-align: center;
+    }
+    .tournament-invite {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Small screens (sm) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .tournament-detail-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .tournament-content {
+        flex-direction: column;
+    }
+    .tournament-content > div.tournament-banner > img {
+        width: 100%;
+    }
+    .tournament-info {
+        margin-left: 0;
+    }
+    .tournament-info-row {
+        text-align: center;
+    }
+    .tournament-invite {
+        display: flex;
+        justify-content: center;
+    }
 }
 </style>
