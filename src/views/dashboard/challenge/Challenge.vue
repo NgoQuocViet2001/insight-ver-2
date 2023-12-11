@@ -19,10 +19,11 @@
                         <div class="join-challenge">
                             <a-row>
                                 <a-col :xxl="24" :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
-                                    <ChallengeEnter background-image="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX54697784.jpg"
-                                    :inputState="joinInputState"
-                                    title="MỞ KHOÁ THÀNH TỰU" desc="Tham gia đấu trường ngay nào!" 
-                                    btn-text="Tham gia" :btn-click="joinChallengeById"/>
+                                    <ChallengeEnter
+                                        background-image="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX54697784.jpg"
+                                        :inputState="joinInputState" title="MỞ KHOÁ THÀNH TỰU"
+                                        desc="Tham gia đấu trường ngay nào!" btn-text="Tham gia"
+                                        :btn-click="joinChallengeById" />
                                 </a-col>
                             </a-row>
                         </div>
@@ -42,9 +43,12 @@
                             :onOk="() => createChallenge(modalCreateChallengeState.currentModalID)"
                             :onCancel="handleModalCreateCancel" :modalID="modalCreateChallengeState.currentModalID"
                             :formState="modalCreateChallengeState.formState" />
+                        <ModalSuccess :modalSuccessVisible="modalSuccessVisible" :btnClick="redirect"
+                            :handleCancel="handleCancelModalSuccess"
+                            desc="Bạn đã đăng ký thành công tham gia vào giải đấu !" btn-text="Vào phòng chờ" />
                         <div class="challenge-inprogress">
                             <h2>Thử thách đang diễn ra</h2>
-                            <a-tabs v-model:activeKey="activeTabKey" >
+                            <a-tabs v-model:activeKey="activeTabKey">
                                 <a-tab-pane v-for="(tab, index) in tabs" :key="index + 1">
                                     <template #tab><span class="tab-label">{{ tab.label }}</span></template>
                                     <div class="select-status">
@@ -73,10 +77,13 @@
                                                         </div>
                                                     </div>
                                                     <div v-if="item.attendeesLimit">
-                                                        <a-progress type="circle" :percent="item.attendeesNumber/item.attendeesLimit*100" :width="50"
-                                                            strokeColor="#0c4e99" :strokeWidth="8">
+                                                        <a-progress type="circle"
+                                                            :percent="item.attendeesNumber / item.attendeesLimit * 100"
+                                                            :width="50" strokeColor="#0c4e99" :strokeWidth="8">
                                                             <template #format="percent">
-                                                                <span style="color: #373636; margin-left: -3px; font-size: 12px;" >{{ item.attendeesNumber }}/{{ item.attendeesLimit }}</span>
+                                                                <span
+                                                                    style="color: #373636; margin-left: -3px; font-size: 12px;">{{
+    item.attendeesNumber }}/{{ item.attendeesLimit }}</span>
                                                             </template>
                                                         </a-progress>
                                                     </div>
@@ -116,7 +123,8 @@
                             </a-tabs>
                             <ModalTournamentInfo :visible="modalTournamentInfoState.visible"
                                 :modalInfoState="currentTournamentInfo" :type="modalTournamentInfoState.type"
-                                :on-cancel="handleTournamentModalCancel" :handleViewDetail="handleViewDetail" :handleRegistration="handleRegistration"/>
+                                :on-cancel="handleTournamentModalCancel" :handleViewDetail="handleViewDetail"
+                                :handleRegistration="handleRegistration" />
                         </div>
                     </a-col>
                     <a-col :xxl="6" :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -168,6 +176,8 @@ import Buttons from "@/components/buttons/Buttons.vue"
 import ModalCreateChallenge from "./ModalCreateChallenge.vue";
 import ModalTournamentInfo from './ModalTournamentInfo.vue';
 import ChallengeEnter from './ChallengeEnter.vue';
+import ModalSuccess from './ModalSuccess.vue';
+
 const router = useRouter();
 
 //props 
@@ -806,13 +816,14 @@ const modalCreateChallengeState = reactive({
     visible: false,
     type: 'primary',
 });
+const modalSuccessVisible = ref(false);
 const tournamentFormState = reactive({
     challengeName: '',
     shortDesc: '',
     start: '',
     end: '',
     level: 'easy',
-    language:'csharp',
+    language: 'csharp',
     attendLimit: 'limit1',
     minElo: 'minElo1',
     timeLimit: 'time1',
@@ -825,7 +836,7 @@ const soloFormState = reactive({
     challengeName: '',
     level: 'easy',
     timeLimit: 'time1',
-    language:'csharp',
+    language: 'csharp',
     testNumber: 'testNumber1',
     eloRating: 'elo',
     public: true,
@@ -834,7 +845,7 @@ const trainFormState = reactive({
     challengeName: '',
     level: 'easy',
     timeLimit: 'time1',
-    language:'csharp',
+    language: 'csharp',
     testNumber: 'testNumber1',
 });
 
@@ -856,7 +867,7 @@ const modalTournamentInfoState = reactive({
 })
 // MOUNTED
 onMounted(() => {
-    
+
 });
 //COMPUTED
 
@@ -963,9 +974,8 @@ const createChallenge = (id: number) => {
         default:
             break;
     }
-
     setTimeout(() => {
-        modalCreateChallengeState.visible = false;
+        showModalSuccess();
     }, 1000);
 }
 const handleModalCreateCancel = () => {
@@ -1001,7 +1011,7 @@ const showTournamentModal = () => {
 }
 const handleTournamentModalCancel = () => {
     modalTournamentInfoState.visible = false;
-    currentTournamentInfo.value = { name: '', id: '' , matchingCode: '', tournamentUrl: ''};
+    currentTournamentInfo.value = { name: '', id: '', matchingCode: '', tournamentUrl: '' };
 }
 const toggleViewMore = () => {
     viewMore.value = !viewMore.value;
@@ -1029,6 +1039,17 @@ const getRankingStyle = (order: any) => {
     }
     return { color, icon };
 };
+const showModalSuccess = () => {
+    modalSuccessVisible.value = true;
+}
+const redirect = () => {
+    setTimeout(()=>{
+        console.log('Chuyển hướng đến trang hàng chờ')
+    }, 2000)
+}
+const handleCancelModalSuccess = () => {
+    modalSuccessVisible.value = false;
+}
 const handleRegistration = () => {
 
 }
@@ -1080,11 +1101,13 @@ const handleRegistration = () => {
 :global(div.challenge-info > div > div.ant-col.ant-col-xs-24.ant-col-sm-24.ant-col-md-24.ant-col-lg-24.ant-col-xl-16.ant-col-xxl-18 > figure > div) {
     margin-bottom: 0 !important;
 }
+
 :global(.challenge-container .ant-btn-primary) {
     background-color: #0c4e99 !important;
 }
+
 :global(.challenge-container .ant-btn-primary:hover, .challenge-container .ant-btn-primary:focus),
-:global(.challenge-container .fEJzIv.fEJzIv:hover,.challenge-container .fEJzIv.fEJzIv:focus) {
+:global(.challenge-container .fEJzIv.fEJzIv:hover, .challenge-container .fEJzIv.fEJzIv:focus) {
     background-color: #0c4e99 !important;
 }
 
@@ -1092,19 +1115,24 @@ const handleRegistration = () => {
 :global(.challenge-container .fiLpOL.fiLpOL) {
     background-color: #E65A2B !important;
 }
+
 :global(.challenge-container .fiLpOL.fiLpOL:hover, .challenge-container .fiLpOL.fiLpOL:focus) {
     background-color: #ffae42 !important;
 }
+
 :global(.challenge-container .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn),
-:global(.challenge-container .ant-tabs-tab:hover){
+:global(.challenge-container .ant-tabs-tab:hover) {
     color: #0c4e99;
 }
+
 .challenge-container {
     padding-top: 1rem;
 }
-:global(.challenge-container .lmeiNC .ant-pagination-item-active a)  {
+
+:global(.challenge-container .lmeiNC .ant-pagination-item-active a) {
     background-color: #0c4e99;
 }
+
 .challenge-inprogress,
 .ranking-top {
     padding: 12px 24px 24px;
@@ -1113,10 +1141,12 @@ const handleRegistration = () => {
     border-radius: 12px;
     /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
 }
+
 .ranking-top {
     background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+
 /* .join-challenge {
     padding: 24px;
 } */
@@ -1205,9 +1235,11 @@ const handleRegistration = () => {
     border-radius: 6px;
     margin-right: 16px;
 }
+
 .challenge-pagination {
     background-color: transparent;
 }
+
 .ranking-top {
     display: flex;
     flex-direction: column;
@@ -1297,6 +1329,7 @@ const handleRegistration = () => {
         align-items: center;
         align-self: center;
     }
+
     :global(div.tab-content > div > div > div > div > div) {
         display: flex !important;
         justify-content: center;
@@ -1335,6 +1368,7 @@ const handleRegistration = () => {
         align-items: center;
         align-self: center;
     }
+
     :global(div.tab-content > div > div > div > div > div) {
         display: flex !important;
         justify-content: center;
@@ -1348,8 +1382,9 @@ const handleRegistration = () => {
         width: 25vw;
         aspect-ratio: 16/9;
     }
+
     .ant-tabs-tabpane {
-        min-height: calc(90vw + 11rem);   
+        min-height: calc(90vw + 11rem);
     }
 }
 
@@ -1359,8 +1394,9 @@ const handleRegistration = () => {
         width: 20vw;
         aspect-ratio: 16/9;
     }
+
     .ant-tabs-tabpane {
-        min-height: calc(74vw + 9rem);   
+        min-height: calc(74vw + 9rem);
     }
 }
 
@@ -1369,12 +1405,14 @@ const handleRegistration = () => {
     .challenge-enter-title {
         font-size: 1.6rem;
     }
+
     .challenge-inprogress-img {
         width: 15vw;
         aspect-ratio: 16/9;
     }
+
     .ant-tabs-tabpane {
-        min-height: calc(58vw + 6rem);   
+        min-height: calc(58vw + 6rem);
     }
 }
 
@@ -1384,8 +1422,8 @@ const handleRegistration = () => {
         width: 12vw;
         aspect-ratio: 16/9;
     }
+
     .ant-tabs-tabpane {
-        min-height: calc(27vw + 2.5rem);   
+        min-height: calc(27vw + 2.5rem);
     }
-}
-</style>
+}</style>

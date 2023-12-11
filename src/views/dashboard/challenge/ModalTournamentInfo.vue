@@ -74,17 +74,21 @@
                 </div>
             </div>
             <div class="tournament-desc-action">
-                <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg"
-                    @click="handleViewDetail">Xem chi tiết
+                <sdButton type="light" shape="round" size="lg" @click="handleViewDetail">Xem chi tiết
                 </sdButton>
-                <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg" @click="handleRegistration">Đăng ký
+                <sdButton v-if="modalInfoState.status === 'upcoming'" shape="round" size="lg" style="background-color: #E65A2B; color: #fff;"
+                    @click="handleRegistration">Đăng ký
                     tham gia</sdButton>
             </div>
         </sdModal>
+        <ModalSuccess :modalSuccessVisible="modalSuccessVisible" :btnClick="redirect" :handleCancel="handleCancelModalSuccess" desc="Bạn đã đăng ký thành công tham gia vào giải đấu !" btn-text="Vào phòng chờ"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import ModalSuccess from './ModalSuccess.vue';
+const modalSuccessVisible = ref(false);
 const props = defineProps([
     'visible',
     'onOk',
@@ -94,8 +98,27 @@ const props = defineProps([
     'modalInfoState',
     'handleViewDetail',
     'matchingCode',
-    'handleRegistration'
+    // 'handleRegistration'
 ]);
+const showModalSuccess = () => {
+    modalSuccessVisible.value = true;
+}
+const handleRegistration = () => {
+    
+    setTimeout(()=> {
+        //xử lí logic
+
+        showModalSuccess();
+    }, 500)
+}
+const handleCancelModalSuccess = () => {
+    modalSuccessVisible.value = false;
+}
+const redirect = () => {
+    setTimeout(()=>{
+        console.log('Chuyển hướng đến trang hàng chờ')
+    }, 2000)
+}
 </script>
 <style scoped>
 :global(body > div:nth-child(11) > div > div.ant-modal-wrap) {
