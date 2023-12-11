@@ -29,7 +29,7 @@
                         <div class="create-challenge">
                             <h2>Tạo thử thách</h2>
                             <a-row :gutter=[8,8]>
-                                <a-col :xxl="8" :xl="12" :lg="24" :md="24" :sm="24" :xs="24" v-for="item in challengeItems"
+                                <a-col :xxl="8" :xl="12" :lg="12" :md="24" :sm="24" :xs="24" v-for="item in challengeItems"
                                     :key="item.title">
                                     <ChallengeCard :backgroundImage="item.backgroundImage" :title="item.title"
                                         :desc="item.desc" :btnText="item.btnText"
@@ -44,8 +44,8 @@
                             :formState="modalCreateChallengeState.formState" />
                         <div class="challenge-inprogress">
                             <h2>Thử thách đang diễn ra</h2>
-                            <TabBasic v-model:activeKey="activeTabKey">
-                                <Child v-for="(tab, index) in tabs" :key="index + 1">
+                            <a-tabs v-model:activeKey="activeTabKey" >
+                                <a-tab-pane v-for="(tab, index) in tabs" :key="index + 1">
                                     <template #tab><span class="tab-label">{{ tab.label }}</span></template>
                                     <div class="select-status">
                                         <a-select v-if="index == 0" v-model:value="selectState" style="width: 100%"
@@ -74,7 +74,7 @@
                                                     </div>
                                                     <div v-if="item.attendeesLimit">
                                                         <a-progress type="circle" :percent="item.attendeesNumber/item.attendeesLimit*100" :width="50"
-                                                            strokeColor="#8231d3" :strokeWidth="8">
+                                                            strokeColor="#0c4e99" :strokeWidth="8">
                                                             <template #format="percent">
                                                                 <span style="color: #373636; margin-left: -3px; font-size: 12px;" >{{ item.attendeesNumber }}/{{ item.attendeesLimit }}</span>
                                                             </template>
@@ -112,11 +112,11 @@
                                                 @change="handleSoloPageChange" />
                                         </sdCards>
                                     </div>
-                                </Child>
-                            </TabBasic>
+                                </a-tab-pane>
+                            </a-tabs>
                             <ModalTournamentInfo :visible="modalTournamentInfoState.visible"
                                 :modalInfoState="currentTournamentInfo" :type="modalTournamentInfoState.type"
-                                :on-cancel="handleTournamentModalCancel" :handleViewDetail="handleViewDetail" />
+                                :on-cancel="handleTournamentModalCancel" :handleViewDetail="handleViewDetail" :handleRegistration="handleRegistration"/>
                         </div>
                     </a-col>
                     <a-col :xxl="6" :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -162,7 +162,7 @@ import { ref, computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { BreadcrumbWrapperStyle } from "@/views/uiElements/ui-elements-styled";
 import { Main } from '@/views/styled';
-import { TabBasic, Child } from "@/components/tabs/Style";
+// import { TabBasic, Child } from "@/components/tabs/Style";
 import ChallengeCard from "./ChallengeCard.vue";
 import Buttons from "@/components/buttons/Buttons.vue"
 import ModalCreateChallenge from "./ModalCreateChallenge.vue";
@@ -179,22 +179,22 @@ const challengeItems = [
         id: 1,
         title: "Giải đấu",
         desc: "Tạo giải đấu nhiều người với nhiều phần thưởng hấp dẫn",
-        backgroundImage: "https://assets.leetcode.com/contest/weekly-contest-291/card_img_1654267951.png",
-        btnText: "Tạo"
+        backgroundImage: './src/assets/images/card_1.png',
+        btnText: "Tạo giải đấu"
     },
     {
         id: 2,
         title: "Solo",
         desc: "So tài code với bạn bè và người khác",
-        backgroundImage: "https://assets.leetcode.com/contest/weekly-contest-290/card_img_1654267980.png",
-        btnText: "Tạo"
+        backgroundImage: './src/assets/images/card_2.png',
+        btnText: "Tạo trận"
     },
     {
         id: 3,
         title: "Luyện tập",
         desc: "Luyện tập code không giới hạn",
-        backgroundImage: "https://leetcode.com/_next/static/images/weekly-default-553ede7bcc8e1b4a44c28a9e4a32068c.png",
-        btnText: "Tạo"
+        backgroundImage: './src/assets/images/card_3.png',
+        btnText: "Tạo trận"
     },
 ];
 // tabs
@@ -722,22 +722,30 @@ const tournamentFormState = reactive({
     start: '',
     end: '',
     level: 'easy',
-    challengeAttendCount: '',
-    challengeTime: 'time1',
+    language:'csharp',
+    attendLimit: 'limit1',
+    minElo: 'minElo1',
+    timeLimit: 'time1',
+    testNumber: 'testNumber1',
+    prize: 'prize1',
     apiUpload: '',
     bannerFile: [],
 });
 const soloFormState = reactive({
     challengeName: '',
     level: 'easy',
-    challengeTime: 'time1',
-
+    timeLimit: 'time1',
+    language:'csharp',
+    testNumber: 'testNumber1',
+    eloRating: 'elo',
+    public: true,
 });
 const trainFormState = reactive({
     challengeName: '',
     level: 'easy',
-    challengeTime: 'time1',
-
+    timeLimit: 'time1',
+    language:'csharp',
+    testNumber: 'testNumber1',
 });
 
 let selectState = ref('happening');
@@ -831,8 +839,12 @@ const createChallenge = (id: number) => {
                 start: tournamentFormState.start,
                 end: tournamentFormState.end,
                 level: tournamentFormState.level,
-                challengeTime: tournamentFormState.challengeTime,
+                challengeTime: tournamentFormState.timeLimit,
                 bannerFile: tournamentFormState.bannerFile,
+                language: tournamentFormState.language,
+                minElo: tournamentFormState.minElo,
+                testNumber: tournamentFormState.testNumber,
+                prize: tournamentFormState.prize,
             }
             console.log(createTournamentData);
             break;
@@ -840,7 +852,11 @@ const createChallenge = (id: number) => {
             const createSoloData = {
                 challengeName: soloFormState.challengeName,
                 level: soloFormState.level,
-                challengeTime: soloFormState.challengeTime,
+                challengeTime: soloFormState.timeLimit,
+                language: soloFormState.language,
+                testNumber: soloFormState.testNumber,
+                eloRating: soloFormState.eloRating,
+                public: soloFormState.public,
             }
             console.log(createSoloData);
             break;
@@ -848,7 +864,9 @@ const createChallenge = (id: number) => {
             const createTrainData = {
                 challengeName: trainFormState.challengeName,
                 level: trainFormState.level,
-                challengeTime: trainFormState.challengeTime,
+                challengeTime: trainFormState.timeLimit,
+                language: trainFormState.language,
+                testNumber: trainFormState.testNumber,
             }
             console.log(createTrainData);
             break;
@@ -921,7 +939,9 @@ const getRankingStyle = (order: any) => {
     }
     return { color, icon };
 };
+const handleRegistration = () => {
 
+}
 </script>
 
 <style scoped>
@@ -931,7 +951,7 @@ const getRankingStyle = (order: any) => {
 }
 
 :global(.challenge-container .ant-breadcrumb .ant-breadcrumb-link .router-link-active) {
-    color: #8231D3 !important;
+    color: #E65A2B !important;
 }
 
 /* css pagination */
@@ -963,31 +983,57 @@ const getRankingStyle = (order: any) => {
     text-overflow: ellipsis;
 }
 
-:global(.challenge-container .ant-tabs.ant-tabs-top.kMfGPw) {
+:global(.challenge-container .ant-tabs.ant-tabs-top) {
     position: relative;
 }
 
 :global(div.challenge-info > div > div.ant-col.ant-col-xs-24.ant-col-sm-24.ant-col-md-24.ant-col-lg-24.ant-col-xl-16.ant-col-xxl-18 > figure > div) {
     margin-bottom: 0 !important;
 }
-
-.challenge-container {
-    padding: 16px 30px 0;
+:global(.challenge-container .ant-btn-primary) {
+    background-color: #0c4e99 !important;
+}
+:global(.challenge-container .ant-btn-primary:hover, .challenge-container .ant-btn-primary:focus),
+:global(.challenge-container .fEJzIv.fEJzIv:hover,.challenge-container .fEJzIv.fEJzIv:focus) {
+    background-color: #0c4e99 !important;
 }
 
-.join-challenge,
-.create-challenge,
+
+:global(.challenge-container .fiLpOL.fiLpOL) {
+    background-color: #E65A2B !important;
+}
+:global(.challenge-container .fiLpOL.fiLpOL:hover, .challenge-container .fiLpOL.fiLpOL:focus) {
+    background-color: #ffae42 !important;
+}
+:global(.challenge-container .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn),
+:global(.challenge-container .ant-tabs-tab:hover){
+    color: #0c4e99;
+}
+.challenge-container {
+    padding-top: 1rem;
+}
+:global(.lmeiNC .ant-pagination-item-active a)  {
+    background-color: #0c4e99;
+}
 .challenge-inprogress,
 .ranking-top {
     padding: 12px 24px 24px;
     margin-top: 12px;
-    background-color: white;
+    /* background-color: white; */
     border-radius: 12px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+}
+.ranking-top {
+    background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.join-challenge {
+/* .join-challenge {
     padding: 24px;
+} */
+.create-challenge {
+    margin-top: 1.5rem;
 }
+
 .ant-tabs-tabpane {
     display: flex;
     flex-direction: column;
@@ -1004,7 +1050,8 @@ const getRankingStyle = (order: any) => {
 }
 
 .challenge-inprogress {
-    padding: 12px 24px 0;
+    margin-top: 2rem;
+    padding: 0;
 }
 
 .select-status {
@@ -1057,7 +1104,7 @@ const getRankingStyle = (order: any) => {
 }
 
 .challenge-inprogress-info:hover h3 {
-    color: #8231d3;
+    color: #E65A2B;
 }
 
 
@@ -1068,7 +1115,9 @@ const getRankingStyle = (order: any) => {
     border-radius: 6px;
     margin-right: 16px;
 }
-
+.challenge-pagination {
+    background-color: transparent;
+}
 .ranking-top {
     display: flex;
     flex-direction: column;
@@ -1092,7 +1141,7 @@ const getRankingStyle = (order: any) => {
 }
 
 .ranking-user:hover .ranking-user-title {
-    color: #8231d3;
+    color: #0c4e99;
 }
 
 .ranking-user-avatar img {
@@ -1130,7 +1179,7 @@ const getRankingStyle = (order: any) => {
 /* responsive */
 @media (max-width: 576px) {
     .lmeiNC {
-        padding: 0;
+        padding: 0.5rem;
     }
 
     .challenge-container {
@@ -1168,7 +1217,7 @@ const getRankingStyle = (order: any) => {
 /* Small screens (sm) */
 @media (min-width: 576px) and (max-width: 767px) {
     .lmeiNC {
-        padding: 0;
+        padding: 0.5rem;
     }
 
     .challenge-container {
@@ -1227,12 +1276,15 @@ const getRankingStyle = (order: any) => {
 
 /* Extra-large screens (xl) */
 @media (min-width: 1200px) and (max-width: 1599px) {
+    .challenge-enter-title {
+        font-size: 1.6rem;
+    }
     .challenge-inprogress-img {
         width: 15vw;
         aspect-ratio: 16/9;
     }
     .ant-tabs-tabpane {
-        min-height: calc(58vw + 7rem);   
+        min-height: calc(58vw + 6rem);   
     }
 }
 

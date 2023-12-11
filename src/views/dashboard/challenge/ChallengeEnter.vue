@@ -1,136 +1,135 @@
 <template>
-    <div class="container">
-        <div class="banner-card-inner theme-2" :style="{ backgroundImage: `url('${backgroundImage}')` }">
-            <div class="challenge-card-info">
-                <div style="flex-grow: 1;">
-                    <h2>{{ title }}</h2>
-                    <p class="truncate-text">{{ desc }}</p>
-                </div>
-                <a-row style="display: flex; gap: 1rem;">
-                    <div>   
-                        <a-input v-model:value="inputState.value" placeholder="Nhập mã tham gia" style="width: 20rem; height: 44px;" />
-                    </div>
-                    <sdButton size="lg" type="primary" :onClick="submit">
-                        {{ btnText }}
-                    </sdButton>
-                </a-row>
-            </div>
-        </div>
+  <div class="challenge-enter-container">
+    <div class="challenge-enter-content">
+      <div>
+        <h2 class="challenge-enter-title">MỞ KHOÁ THÀNH TỰU</h2>
+        <div class="challenge-enter-desc">Tham gia đấu trường ngay nào!</div>
+      </div>
+      <div class="challenge-enter-action">
+        <a-input v-model:value="inputState.value" placeholder="Nhập mã tham gia" />
+        <sdButton type="primary" shape="round">
+          Tham gia
+        </sdButton>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps([
-    'backgroundImage',
-    'title',
-    'desc',
-    'inputState',
-    'btnText',
-    'submit',
+  'backgroundImage',
+  'title',
+  'desc',
+  'inputState',
+  'btnText',
+  'submit',
 ])
 </script>
 <style scoped>
-.container {
-  position: relative;
-  margin-bottom: 0; /* Add your specific margin-bottom value here */
-}
-
-@media only screen and (max-width: 1199px) {
-  .container {
-    margin-bottom: 50px !important;
-  }
-}
-
-@media only screen and (max-width: 991px) {
-  .container {
-    margin-bottom: 30px !important;
-  }
-}
-
-.container h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #fff !important;
-  margin-bottom: 20px;
-  z-index: 2;
-}
-
-.container .banner-card-inner {
+.challenge-enter-container {
+  background-image: url('@/assets/images/frame6.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center bottom;
-  padding: 2rem;
-  min-height: 16rem;
-  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 16/5;
+  border-radius: 1.8rem;
 }
 
-@media only screen and (max-width: 575px) {
-  .container .banner-card-inner {
-    padding: 28px 30px 30px 30px;
+.challenge-enter-content {
+  padding: 5% 6%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.challenge-enter-title {
+  color: #fff;
+  font-weight: 550;
+  font-size: 2rem;
+  margin-bottom: 0;
+  width: 100%;
+  line-height: 2.5rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.5rem;
+}
+
+.challenge-enter-desc {
+  color: #DCE0E5;
+  font-size: 1rem;
+}
+
+.challenge-enter-action {
+  display: flex;
+  width: 60%;
+  gap: 1rem;
+}
+
+.challenge-enter-action>input,
+.challenge-enter-action>button {
+  height: 2.5rem;
+}
+
+/* responsive */
+@media (max-width: 576px) {
+  .challenge-enter-container {
+    aspect-ratio: 16/7;
+  }
+  .challenge-enter-title {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  .challenge-enter-action {
+    width: 100%;
   }
 }
 
-.container .banner-card-inner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+/* Small screens (sm) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .challenge-enter-title {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  .challenge-enter-action {
+    width: 80%;
+  }
 }
 
-.container .banner-card-inner.theme-2 h2 {
-  margin-bottom: 18px;
+/* Medium screens (md) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .challenge-enter-title {
+    font-size: 1.2rem;
+    width: 100%;
+  }
 }
 
-.container .banner-card-inner.theme-2 p {
-  font-size: 15px;
-  color: #fff !important;
-  opacity: 0.70;
-  max-width: 290px;
-  margin-bottom: 20px;
-  z-index: 2;
+/* Large screens (lg) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .challenge-enter-title {
+    font-size: 1.2rem;
+    width: 100%;
+  }
 }
 
-.container .banner-card-inner.theme-2 img {
-  max-width: 285px;
-  z-index: 2;
+/* Extra-large screens (xl) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .challenge-enter-content {
+    padding: 4% 5%;
+  }
+
+  .challenge-enter-title {
+    font-size: 1.6rem;
+    width: 100%;
+  }
+  .challenge-enter-action {
+    width: 62%;
+  }
 }
 
-.container .banner-card-inner button {
-  height: 44px;
-  width: 100px;
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  z-index: 2;
+/* Extra-extra-large screens (xxl) */
+@media (min-width: 1600px) {
+  .challenge-enter-title {
+    width: 18rem;
+  }
 }
-
-.container .banner-card-inner img {
-  position: absolute;
-  bottom: 0;
-  max-width: 460px;
-  right: 0; 
-  z-index: 2;
-}
-
-.container .banner-card-inner .challenge-card-info {
-  position: relative;
-  z-index: 2;
-  height: 12rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.container .banner-card-inner .truncate-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
-}
-
 </style>

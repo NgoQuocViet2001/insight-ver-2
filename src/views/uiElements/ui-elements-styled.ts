@@ -264,17 +264,7 @@ const BadgeDynamicStyle = Styled.div`
   ${({ theme }) => (theme.rtl ? 'left' : 'right')}: 16px !important;
   top: 8px;
 }
-.ant-switch{
-  min-width: 44px;
-  height: 22px;
-  ${({ theme }) => (!theme.rtl ? 'margin-left' : 'margin-right')}: 15px;
-  .ant-switch-handle{
-    top: 4px;
-  }
-  .ant-switch-checked .ant-switch-handle{
-    ${({ theme }) => (!theme.rtl ? 'left' : 'right')}: calc(100% - 14px - 5px);
-  }
-}
+
 `;
 
 const CardStyleWrapper = Styled.div`

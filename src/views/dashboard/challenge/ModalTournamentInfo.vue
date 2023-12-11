@@ -79,7 +79,7 @@
                 <sdButton v-if="modalInfoState.status !== 'upcoming'" type="light" shape="round" size="lg"
                     @click="handleViewDetail">Xem chi tiết
                 </sdButton>
-                <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg">Đăng ký
+                <sdButton v-if="modalInfoState.status === 'upcoming'" type="primary" shape="round" size="lg" @click="handleRegistration">Đăng ký
                     tham gia</sdButton>
             </div>
         </sdModal>
@@ -95,9 +95,9 @@ const props = defineProps([
     'tourInfo',
     'modalInfoState',
     'handleViewDetail',
-    'matchingCode'
+    'matchingCode',
+    'handleRegistration'
 ]);
-
 </script>
 <style scoped>
 :global(body > div:nth-child(11) > div > div.ant-modal-wrap) {

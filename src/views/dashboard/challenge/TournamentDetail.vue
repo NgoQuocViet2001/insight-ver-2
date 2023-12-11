@@ -89,8 +89,8 @@
                         </div>
                     </div>
                 </div>
-                <a-table class="table-responsive table-data" :pagination="pagination" :columns="columns"
-                    :data-source="data">
+                <a-table class="table-responsive table-data" :pagination="pagination" :columns="columns" :data-source="data"
+                    @change="handleChange">
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key === 'user'">
                             <div class="tournament-list-user">
@@ -159,20 +159,22 @@ const columns = [
             { text: 'Độc cô cầu bại', value: 'Độc cô cầu bại' },
             { text: 'Thách đấu', value: 'Thách đấu' },
         ],
-        onFilter: (value: any, record: any) => record.appellation === value,
+        onFilter: (value: any, record: any) => {
+            return record.appellation === value;
+        }
     },
     {
         title: 'Elo Coding',
         dataIndex: 'eloCoding',
         key: 'eloCoding',
         align: 'center',
+        sorter: (a: any, b: any) => a.eloCoding - b.eloCoding,
     },
     {
         title: 'Xếp hạng',
         dataIndex: 'order',
         key: 'order',
         align: 'center',
-        sorter: (a: any, b: any) => a.order - b.order,
     },
     {
         title: 'Thao tác',
@@ -183,6 +185,9 @@ const columns = [
 
 
 ];
+const handleChange = (pagination: any, filters: any, sorter: any) => {
+    console.log('params', pagination, filters, sorter);
+}
 interface FakeData {
     id: number;
     data: {
@@ -655,6 +660,8 @@ const tournament = tournamentData.find(tour => tour.id === +router.params.id);
 const matchingCode = tournamentCode.find(code => code.id === tournament?.id)?.code;
 const currentURL = window.location.href;
 const tournamentAttendeesLength = tournament?.attendeesNumber;
+const minElo = 500;
+const maxElo = 3000;
 const generateFakeData = (): FakeData[] => {
     const dataSource: FakeData[] = [];
 
@@ -662,11 +669,14 @@ const generateFakeData = (): FakeData[] => {
         const fakeData: FakeData = {
             id: i,
             data: Array.from({ length: tournamentAttendeesLength ?? 0 }, (_, j) => {
+                const order = j + 1;
+                const scalingFactor = (maxElo - minElo) / ((tournamentAttendeesLength || 1) - 1);
+                const eloCoding = Math.round(maxElo - order * scalingFactor);
                 return {
                     userId: Mock.mock('@id'),
-                    order: j,
+                    order,
                     fullName: Mock.mock('@name'),
-                    eloCoding: Mock.mock('@integer(10000, 99999)'),
+                    eloCoding,
                     appellation: Mock.mock('@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])'),
                     contestEntered: Mock.mock('@integer(100, 1000)'),
                     email: Mock.mock('@email'),
@@ -683,6 +693,8 @@ const generateFakeData = (): FakeData[] => {
 
 const dataInit = generateFakeData();
 let data = ref(dataInit.find(data => data.id == +router.params.id)?.data);
+
+
 const pagination = reactive({
     total: data.value?.length,
     current: 1,
@@ -924,18 +936,23 @@ const handleReject = (id: string) => {
         padding-left: 0;
         padding-right: 0;
     }
+
     .tournament-content {
         flex-direction: column;
     }
-    .tournament-content > div.tournament-banner > img {
+
+    .tournament-content>div.tournament-banner>img {
         width: 100%;
     }
+
     .tournament-info {
         margin-left: 0;
     }
+
     .tournament-info-row {
         text-align: center;
     }
+
     .tournament-invite {
         display: flex;
         justify-content: center;
@@ -948,21 +965,25 @@ const handleReject = (id: string) => {
         padding-left: 0;
         padding-right: 0;
     }
+
     .tournament-content {
         flex-direction: column;
     }
-    .tournament-content > div.tournament-banner > img {
+
+    .tournament-content>div.tournament-banner>img {
         width: 100%;
     }
+
     .tournament-info {
         margin-left: 0;
     }
+
     .tournament-info-row {
         text-align: center;
     }
+
     .tournament-invite {
         display: flex;
         justify-content: center;
     }
-}
-</style>
+}</style>
