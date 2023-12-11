@@ -110,8 +110,9 @@
                                     alt="Banner">
                             </div>
                         </a-form-item>
-                        <a-row>
-                            <sdButton type="primary" size="lg" @click="onOk">{{ currentModal?.label }}</sdButton>
+                        <a-row justify="end" >
+                            <sdButton type="light" size="lg" shape="round" @click="onCancel" style="margin-right: 0.4rem;">Huỷ</sdButton>
+                            <sdButton type="primary" size="lg" shape="round" @click="onOk" style="background-color: #e65a2b;">{{ currentModal?.label }}</sdButton>
                         </a-row>
                         <!-- <a-row :gutter="20"> -->
                         <!-- <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24">

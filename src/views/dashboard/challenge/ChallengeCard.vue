@@ -49,7 +49,7 @@ const props = defineProps([
 }
 
 .challenge-card-action {
-  padding: 0.5rem 1.2rem;
+  padding: 1rem 1.2rem;
   display: flex;
   justify-content: end;
 }
