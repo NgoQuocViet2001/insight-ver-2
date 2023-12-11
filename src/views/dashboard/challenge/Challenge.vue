@@ -1102,7 +1102,7 @@ const handleRegistration = () => {
 .challenge-container {
     padding-top: 1rem;
 }
-:global(.lmeiNC .ant-pagination-item-active a)  {
+:global(.challenge-container .lmeiNC .ant-pagination-item-active a)  {
     background-color: #0c4e99;
 }
 .challenge-inprogress,

@@ -726,6 +726,9 @@ const handleReject = (id: string) => {
 </script>
 <style scoped>
 /* css pagination */
+:global(.tournament-detail-container .lmeiNC .ant-pagination-item-active a)  {
+    background-color: #0c4e99;
+}
 :global(.tournament-detail-container .ant-pagination-disabled button) {
     cursor: default !important;
 }
