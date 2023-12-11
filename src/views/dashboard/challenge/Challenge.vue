@@ -224,7 +224,10 @@ const challengeInProgress = {
             currentRound: 8,
             attendeesLimit: 20,
             attendeesNumber: 17,
+            matchTime: '120 phút',
+            language: 'Python',
             rate: true,
+            minElo: 1500,
         },
         {
             id: 2,
@@ -238,7 +241,10 @@ const challengeInProgress = {
             currentRound: 6,
             attendeesLimit: 25,
             attendeesNumber: 18,
+            matchTime: '120 phút',
+            language: 'Javascript',
             rate: true,
+            minElo: 1500,
         },
         {
             id: 3,
@@ -252,7 +258,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: true,
+            minElo: 1500,
         },
         {
             id: 4,
@@ -266,7 +275,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 30,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C++',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 5,
@@ -280,7 +292,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 25,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 6,
@@ -294,7 +309,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Python',
             rate: true,
+            minElo: 1500,
         },
         {
             id: 7,
@@ -308,7 +326,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 50,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 8,
@@ -322,7 +343,10 @@ const challengeInProgress = {
             currentRound: 10,
             attendeesLimit: 20,
             attendeesNumber: 17,
+            matchTime: '120 phút',
+            language: 'PHP',
             rate: true,
+            minElo: 1500
         },
         {
             id: 9,
@@ -336,7 +360,10 @@ const challengeInProgress = {
             currentRound: 12,
             attendeesLimit: 25,
             attendeesNumber: 20,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: true,
+            minElo: 1500
         },
         {
             id: 10,
@@ -350,7 +377,10 @@ const challengeInProgress = {
             currentRound: 4,
             attendeesLimit: 15,
             attendeesNumber: 12,
+            matchTime: '120 phút',
+            language: 'C++',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 11,
@@ -364,7 +394,10 @@ const challengeInProgress = {
             currentRound: 5,
             attendeesLimit: 25,
             attendeesNumber: 20,
+            matchTime: '120 phút',
+            language: 'Python',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 12,
@@ -378,7 +411,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 13,
@@ -392,7 +428,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 20,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 14,
@@ -406,7 +445,10 @@ const challengeInProgress = {
             currentRound: 8,
             attendeesLimit: 30,
             attendeesNumber: 25,
+            matchTime: '120 phút',
+            language: 'C++',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 15,
@@ -420,7 +462,10 @@ const challengeInProgress = {
             currentRound: 6,
             attendeesLimit: 20,
             attendeesNumber: 18,
+            matchTime: '120 phút',
+            language: 'Python',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 16,
@@ -434,7 +479,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 17,
@@ -448,7 +496,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 20,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Python',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 18,
@@ -462,7 +513,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'HTML/CSS',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 19,
@@ -476,7 +530,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 20,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Javascript',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 20,
@@ -490,7 +547,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 21,
@@ -504,7 +564,10 @@ const challengeInProgress = {
             currentRound: 10,
             attendeesLimit: 20,
             attendeesNumber: 20,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: false,
+            minElo: 1500,
         },
         {
             id: 22,
@@ -518,7 +581,10 @@ const challengeInProgress = {
             currentRound: 10,
             attendeesLimit: 25,
             attendeesNumber: 25,
+            matchTime: '120 phút',
+            language: 'Typescript',
             rate: true,
+            minElo: 1500
         },
         {
             id: 23,
@@ -532,7 +598,10 @@ const challengeInProgress = {
             currentRound: 6,
             attendeesLimit: 30,
             attendeesNumber: 25,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: true,
+            minElo: 1500
         },
         {
             id: 24,
@@ -546,7 +615,10 @@ const challengeInProgress = {
             currentRound: 4,
             attendeesLimit: 20,
             attendeesNumber: 18,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: true,
+            minElo: 1500
         },
         {
             id: 25,
@@ -560,7 +632,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: true,
+            minElo: 1500
         },
         {
             id: 26,
@@ -574,7 +649,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 20,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: true,
+            minElo: 1500
         },
         {
             id: 27,
@@ -588,7 +666,10 @@ const challengeInProgress = {
             currentRound: 8,
             attendeesLimit: 30,
             attendeesNumber: 25,
+            matchTime: '120 phút',
+            language: 'C#',
             rate: true,
+            minElo: 1500
         },
         {
             id: 28,
@@ -602,7 +683,10 @@ const challengeInProgress = {
             currentRound: 6,
             attendeesLimit: 25,
             attendeesNumber: 20,
+            matchTime: '120 phút',
+            language: 'Javascript',
             rate: true,
+            minElo: 1500
         },
         {
             id: 29,
@@ -616,7 +700,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 15,
             attendeesNumber: 0,
+            matchTime: '120 phút',
+            language: 'C#/Java',
             rate: true,
+            minElo: 1500
         },
         {
             id: 30,
@@ -630,7 +717,10 @@ const challengeInProgress = {
             currentRound: 0,
             attendeesLimit: 20,
             attendeesNumber: 12,
+            matchTime: '120 phút',
+            language: 'Java',
             rate: true,
+            minElo: 1500
         },
     ],
     solo: Array.from({ length: 70 }, (_, index) => ({

@@ -39,7 +39,7 @@
                     </a-row>
                 </div>
             </div>
-            <div class="tournament-user">
+            <!-- <div class="tournament-user">
                 <div>
                     <img src="https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/users/tsreaper/avatar_1627139236.png"
                         alt="Poster" class="tournament-user-avatar" />
@@ -48,22 +48,20 @@
                     <h3 class="tournament-user-name">Ngô Quốc Việt</h3>
                     <sdButton type="primary" shape="round" size="sm">Rank: Bạch kim</sdButton>
                 </div>
-            </div>
+            </div> -->
             <div class="tournament-detail">
                 <a-row>
                     <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24" class="tournament-detail-item">
-                        Tổng số vòng đấu: {{ modalInfoState.roundTotal }}
+                        Ngày bắt đầu: {{ modalInfoState.startTime }}
                     </a-col>
                     <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24" class="tournament-detail-item">
-                        Vòng đấu hiện tại: {{ modalInfoState.currentRound }}
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24" class="tournament-detail-item">
-                        Ngày bắt đầu: 26/11/2023
+                        Thời gian thi đấu: {{ modalInfoState.matchTime }}
                     </a-col>
                     <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24" class="tournament-detail-item">
-                        Ngày kêt thúc: 26/12/2023
+                        Ngôn ngữ: {{ modalInfoState.language }}
+                    </a-col>
+                    <a-col :xxl="12" :xl="12" :lg="12" :md="12" :sm="12" :xs="24" class="tournament-detail-item">
+                        Elo tối thiểu: {{ modalInfoState.minElo }}
                     </a-col>
                 </a-row>
             </div>

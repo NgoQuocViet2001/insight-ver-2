@@ -34,6 +34,7 @@
                                         <a-select-option value="minElo1">1000</a-select-option>
                                         <a-select-option value="minElo2">1200</a-select-option>
                                         <a-select-option value="minElo3">1500</a-select-option>
+                                        <a-select-option value="minElo4">Không</a-select-option>
                                     </a-select>
                                 </a-form-item>
                             </a-col>
