@@ -134,18 +134,28 @@ export default [
     component: () => import( '@/views/pages/TermsConditions.vue'),
   },
   {
-    path: '/thuthach',
-    name: 'thuthach',
+    path: '/dautruong',
+    name: 'dautruong',
     component: () => import("@/views/dashboard/challenge/Challenge.vue"),
   },
   {
-    path: '/thuthach/giaidau/:id',
+    path: '/dautruong/giaidau/:id',
     name: 'tournament-detail',
     component: () => import( '@/views/dashboard/challenge/TournamentDetail.vue'),
   },
-  // {
-  //   path: '/thuthach/giaidau',
-  //   name: 'thuthach-giaidau',
-  //   component: () => import("@/views/dashboard/challenge/TournamentAttendeeList.vue"),
-  // },
+  {
+    path: '/interview',
+    name: 'topicInterview',
+    component: () => import("@/views/dashboard/interview/TopicInterview.vue"),
+  },
+  {
+    path: '/interview/:id',
+    name: 'interview',
+    component: () => import("@/views/dashboard/interview/Interview.vue"),
+  },
+  {
+    path: '/dautruong/tongquan',
+    name: 'overviewChallenge',
+    component: () => import('@/views/dashboard/overview/OverviewChallenge.vue'),
+  },
 ];

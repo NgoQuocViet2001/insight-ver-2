@@ -7,13 +7,13 @@
                         <router-link to="/">Home</router-link>
                     </a-breadcrumb-item>
                     <a-breadcrumb-item>
-                        <router-link to="/thuthach">Thử thách</router-link>
+                        <router-link to="/dautruong">Đấu trường</router-link>
                     </a-breadcrumb-item>
                     <a-breadcrumb-item>
-                        <router-link to="/thuthach/giaidau">Giải đấu</router-link>
+                        <router-link to="/dautruong/giaidau">Giải đấu</router-link>
                     </a-breadcrumb-item>
                     <a-breadcrumb-item>
-                        <router-link :to="`/thuthach/giaidau/${tournament?.id}`">{{ tournament?.title }}</router-link>
+                        <router-link :to="`/dautruong/giaidau/${tournament?.id}`">{{ tournament?.title }}</router-link>
                     </a-breadcrumb-item>
                 </a-breadcrumb>
             </BreadcrumbWrapperStyle>

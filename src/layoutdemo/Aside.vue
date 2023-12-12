@@ -437,9 +437,9 @@ const menus = [
   },
   {
     icon: 'ranking-star',
-    title: 'Thi đấu',
+    title: 'Đấu trường',
     show: true,
-    link: '/thuthach',
+    link: '/dautruong',
     items: [],
   },
   {

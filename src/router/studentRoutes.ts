@@ -12,7 +12,7 @@ export default [
       {
         name: 'chatBotBaiTap',
         path: 'chatbot/:id',
-        component: () => import('../views/apps/chat/ChatApp.vue'),
+        component: () => import('@/views/dashboard/student/AIChatAssistantStudent.vue'),
       },
       {
         name: 'thongtincanhan',
