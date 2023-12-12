@@ -43,9 +43,9 @@
                             :onOk="() => createChallenge(modalCreateChallengeState.currentModalID)"
                             :onCancel="handleModalCreateCancel" :modalID="modalCreateChallengeState.currentModalID"
                             :formState="modalCreateChallengeState.formState" />
-                        <ModalSuccess :modalSuccessVisible="modalSuccessVisible" :btnClick="redirect"
+                        <ModalSuccess :modalSuccessVisible="modalSuccessCreateState.visible" :btnClick="redirect"
                             :handleCancel="handleCancelModalSuccess"
-                            desc="Bạn đã đăng ký thành công tham gia vào giải đấu !" btn-text="Vào phòng chờ" />
+                            :desc="modalSuccessCreateState.desc" btn-text="Xem phòng" />
                         <div class="challenge-inprogress">
                             <h2>Thử thách đang diễn ra</h2>
                             <a-tabs v-model:activeKey="activeTabKey">
@@ -816,7 +816,21 @@ const modalCreateChallengeState = reactive({
     visible: false,
     type: 'primary',
 });
-const modalSuccessVisible = ref(false);
+const modalSuccessCreateState = reactive({
+    visible: false,
+    desc: computed(()=> {
+        switch (modalCreateChallengeState.currentModalID) {
+            case 1:
+                return 'Bạn đã tạo thành công giải đấu';
+            case 2:
+                return 'Bạn đã tạo thành công trận đấu solo';
+            case 3:
+                return 'Bạn đã tạo thành công trận luyện tập';
+            default:
+                return '';
+        }
+    })
+});
 const tournamentFormState = reactive({
     challengeName: '',
     shortDesc: '',
@@ -1040,7 +1054,7 @@ const getRankingStyle = (order: any) => {
     return { color, icon };
 };
 const showModalSuccess = () => {
-    modalSuccessVisible.value = true;
+    modalSuccessCreateState.visible = true;
 }
 const redirect = () => {
     setTimeout(()=>{
@@ -1048,7 +1062,7 @@ const redirect = () => {
     }, 2000)
 }
 const handleCancelModalSuccess = () => {
-    modalSuccessVisible.value = false;
+    modalSuccessCreateState.visible = false;
 }
 const handleRegistration = () => {
 
